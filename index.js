@@ -1,15 +1,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import financialContentUrls from "./financial-content-urls.json" assert { type: "json" };
 
 dotenv.config();
 const app = express();
 app.use(cors());
 
 const getSiteUrl = async (counter) => {
-  const reponse = await fetch(process.env.FINANCIAL_CONTENT_URLS);
-  const json = await reponse.json();
-  const siteList = json.urls;
+  const siteList = financialContentUrls.urls;
   let siteNumber = counter % siteList.length;
   siteNumber = siteNumber <= 0 ? siteList.length : siteNumber;
   const siteUrl = siteList[siteNumber - 1];
