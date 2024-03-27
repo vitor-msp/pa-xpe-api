@@ -1,12 +1,12 @@
-import express from "express";
+import express, { Router } from "express";
 import cors from "cors";
-import dotenv from "dotenv";
-import blacklist from "./blacklist.json" assert { type: "json" };
-import financialContentUrls from "./financial-content-urls.json" assert { type: "json" };
+import serverless from "serverless-http";
+import blacklist from "../../blacklist.json" assert { type: "json" };
+import financialContentUrls from "../../financial-content-urls.json" assert { type: "json" };
 
-dotenv.config();
 const app = express();
 app.use(cors());
+const router = Router();
 
 const getSiteUrl = async (counter) => {
   const siteList = financialContentUrls.urls;
@@ -16,7 +16,7 @@ const getSiteUrl = async (counter) => {
   return siteUrl;
 };
 
-app.get("/financial-content", async (req, res) => {
+router.get("/financial-content", async (req, res) => {
   try {
     const siteUrl = await getSiteUrl(req.query.counter);
     res.redirect(siteUrl);
@@ -26,7 +26,7 @@ app.get("/financial-content", async (req, res) => {
   }
 });
 
-app.get("/blacklist", async (_req, res) => {
+router.get("/blacklist", async (_req, res) => {
   try {
     res.json(blacklist);
   } catch (error) {
@@ -35,4 +35,6 @@ app.get("/blacklist", async (_req, res) => {
   }
 });
 
-app.listen(8000, () => console.log("api started"));
+app.use("/api", router);
+
+export const handler = serverless(app);
