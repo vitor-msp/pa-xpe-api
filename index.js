@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import blacklist from "./blacklist.json" assert { type: "json" };
 import financialContentUrls from "./financial-content-urls.json" assert { type: "json" };
 
 dotenv.config();
@@ -19,6 +20,15 @@ app.get("/financial-content", async (req, res) => {
   try {
     const siteUrl = await getSiteUrl(req.query.counter);
     res.redirect(siteUrl);
+  } catch (error) {
+    console.log(error);
+    res.send();
+  }
+});
+
+app.get("/blacklist", async (_req, res) => {
+  try {
+    res.json(blacklist);
   } catch (error) {
     console.log(error);
     res.send();
