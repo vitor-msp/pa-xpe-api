@@ -1,7 +1,7 @@
 import blacklist from "../blacklist.json" assert { type: "json" };
 import financialContentUrls from "../financial-content-urls.json" assert { type: "json" };
 
-const getFinancialContentUrl = async (accessCounter) => {
+const getFinancialContentUrl = async (accessCounter = 0) => {
   const contentList = financialContentUrls.urls;
   let contentPosition = accessCounter % contentList.length;
   contentPosition = contentPosition <= 0 ? contentList.length : contentPosition;
