@@ -21,7 +21,7 @@ const loadFiles = new LoadFiles(
   process.env.FINANCIAL_CONTENT_LIST_URL,
   store
 );
-await loadFiles.execute();
+(async () => await loadFiles.execute())();
 setInterval(loadFiles.execute, fetchIntervalInMs);
 
 export { api };
