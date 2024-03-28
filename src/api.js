@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import cors from "cors";
-import { getBlacklist, getFinancialContent } from "./core.js";
+import { getBlacklist, getFinancialContent } from "./controller.js";
 
 const api = express();
 api.use(cors());
