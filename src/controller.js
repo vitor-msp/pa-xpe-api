@@ -1,26 +1,13 @@
-import fs from "fs";
 import { getFinancialContentUrl } from "./core.js";
-
-let blacklist;
-let financialContentUrls;
-
-const loadFiles = () => {
-  fs.readFile("blacklist.json", (error, data) => {
-    if (error) throw error;
-    blacklist = JSON.parse(data);
-  });
-
-  fs.readFile("financial-content-urls.json", (error, data) => {
-    if (error) throw error;
-    financialContentUrls = JSON.parse(data);
-  });
-};
+import { blacklist, financialContentUrls } from "./load.js";
 
 const getFinancialContent = async (req, res) => {
   try {
     console.log(req.query.domain);
-    const contentList = financialContentUrls.urls;
-    const contentUrl = getFinancialContentUrl(contentList, req.query.counter);
+    const contentUrl = getFinancialContentUrl(
+      financialContentUrls.urls,
+      req.query.counter
+    );
     res.redirect(contentUrl);
   } catch (error) {
     console.error(error);
@@ -36,7 +23,5 @@ const getBlacklist = async (_req, res) => {
     res.send();
   }
 };
-
-loadFiles();
 
 export { getFinancialContent, getBlacklist };
