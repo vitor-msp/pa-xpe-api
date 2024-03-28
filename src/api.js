@@ -1,13 +1,26 @@
 import express, { Router } from "express";
 import cors from "cors";
-import { getBlacklist, getFinancialContent } from "./controller.js";
 
-const api = express();
-api.use(cors());
-const router = Router();
-api.use("/api", router);
+class Api {
+  constructor(controller) {
+    this.controller = controller;
+  }
 
-router.get("/financial-content", getFinancialContent);
-router.get("/blacklist", getBlacklist);
+  build() {
+    const api = express();
+    api.use(cors());
+    const router = Router();
+    api.use("/api", router);
 
-export { api };
+    router.get("/blacklist", (req, res) =>
+      this.controller.getBlacklist(req, res)
+    );
+    router.get("/financial-content", (req, res) =>
+      this.controller.getFinancialContent(req, res)
+    );
+
+    return api;
+  }
+}
+
+export { Api };

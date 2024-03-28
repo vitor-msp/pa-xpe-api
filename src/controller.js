@@ -1,27 +1,28 @@
-import { getFinancialContentUrl } from "./core.js";
-import { blacklist, financialContentUrls } from "./load.js";
-
-const getFinancialContent = async (req, res) => {
-  try {
-    console.log(req.query.domain);
-    const contentUrl = getFinancialContentUrl(
-      financialContentUrls.urls,
-      req.query.counter
-    );
-    res.redirect(contentUrl);
-  } catch (error) {
-    console.error(error);
-    res.send();
+class Controller {
+  constructor(financialContent, store) {
+    this.financialContent = financialContent;
+    this.store = store;
   }
-};
 
-const getBlacklist = async (_req, res) => {
-  try {
-    res.json(blacklist);
-  } catch (error) {
-    console.error(error);
-    res.send();
+  getBlacklist(_req, res) {
+    try {
+      return res.json(this.store.blacklist);
+    } catch (error) {
+      console.error(error);
+      return res.status(400).end();
+    }
   }
-};
 
-export { getFinancialContent, getBlacklist };
+  getFinancialContent(req, res) {
+    try {
+      console.log("domain", req.query.domain);
+      const contentUrl = this.financialContent.get(req.query.counter);
+      return res.redirect(contentUrl);
+    } catch (error) {
+      console.error(error);
+      return res.status(400).end();
+    }
+  }
+}
+
+export { Controller };
