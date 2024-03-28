@@ -1,20 +1,18 @@
-import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 
 let blacklist;
 let financialContentUrls;
 
-const loadFiles = () => {
-  fs.readFile("blacklist.json", (error, data) => {
-    if (error) throw error;
-    blacklist = JSON.parse(data);
-  });
+const loadFiles = async () => {
+  let response = await fetch(process.env.BLACKLIST_URL);
+  blacklist = await response.json();
 
-  fs.readFile("financial-content-urls.json", (error, data) => {
-    if (error) throw error;
-    financialContentUrls = JSON.parse(data);
-  });
+  response = await fetch(process.env.FINANCIAL_CONTENT_LIST_URL);
+  financialContentUrls = await response.json();
 };
 
 loadFiles();
+setInterval(loadFiles, process.env.FETCH_INTERVAL_IN_MS || 3600000);
 
 export { blacklist, financialContentUrls };
