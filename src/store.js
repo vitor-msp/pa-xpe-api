@@ -1,6 +1,6 @@
 class Store {
   blacklist = {
-    urls: [],
+    domains: [],
   };
 
   contentList = {

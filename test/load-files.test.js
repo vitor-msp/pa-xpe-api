@@ -1,18 +1,8 @@
 import { jest } from "@jest/globals";
 import { LoadFiles } from "../src/load-files.js";
 import { Store } from "../src/store.js";
-
-const blacklist = {
-  urls: ["www.amazon.com", "www.magazineluiza.com.br", "www.kabum.com.br"],
-};
-
-const financialContentList = {
-  urls: [
-    "https://www.youtube.com/",
-    "https://www.google.com/",
-    "https://www.uol.com.br/",
-  ],
-};
+import { blacklist } from "./file-examples/blacklist.js";
+import { financialContentList } from "./file-examples/financial-content-list.js";
 
 global.fetch = jest.fn((url) =>
   Promise.resolve({

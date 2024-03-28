@@ -3,24 +3,16 @@ import { FinancialContent } from "../src/financial-content.js";
 import { Controller } from "../src/controller.js";
 import { Api } from "../src/api.js";
 import { Store } from "../src/store.js";
+import { blacklist } from "./file-examples/blacklist.js";
+import { financialContentList } from "./file-examples/financial-content-list.js";
 
 describe("api tests", () => {
   let api;
-  const blacklist = [
-    "www.amazon.com",
-    "www.magazineluiza.com.br",
-    "www.kabum.com.br",
-  ];
-  const contentList = [
-    "https://www.youtube.com/",
-    "https://www.google.com/",
-    "https://www.uol.com.br/",
-  ];
 
   buildTest = () => {
     const store = new Store();
-    store.blacklist.urls = blacklist;
-    store.contentList.urls = contentList;
+    store.blacklist = blacklist;
+    store.contentList = financialContentList;
     const controller = new Controller(new FinancialContent(store), store);
     api = new Api(controller).build();
   };
@@ -30,7 +22,7 @@ describe("api tests", () => {
   test("should return blacklist with status code 200", async () => {
     const response = await supertest(api).get("/api/blacklist").send();
     expect(response.statusCode).toBe(200);
-    expect(response.body.urls).toEqual(blacklist);
+    expect(response.body).toEqual(blacklist);
   });
 
   test("should redirect to YOUTUBE url with status code 302", async () => {

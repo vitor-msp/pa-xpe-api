@@ -1,17 +1,13 @@
 import { FinancialContent } from "../src/financial-content.js";
 import { Store } from "../src/store.js";
+import { financialContentList } from "./file-examples/financial-content-list.js";
 
 describe("core tests", () => {
-  let store;
   let financialContent;
 
   beforeAll(() => {
-    store = new Store();
-    store.contentList.urls = [
-      "https://www.youtube.com/",
-      "https://www.google.com/",
-      "https://www.uol.com.br/",
-    ];
+    const store = new Store();
+    store.contentList = financialContentList;
     financialContent = new FinancialContent(store);
   });
 
