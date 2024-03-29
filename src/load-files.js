@@ -14,4 +14,4 @@ class LoadFiles {
   }
 }
 
-export { LoadFiles };
+module.exports = { LoadFiles };

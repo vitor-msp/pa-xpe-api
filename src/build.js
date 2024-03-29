@@ -1,9 +1,9 @@
-import dotenv from "dotenv";
-import { LoadFiles } from "./load-files.js";
-import { Api } from "./api.js";
-import { Controller } from "./controller.js";
-import { FinancialContent } from "./financial-content.js";
-import { Store } from "./store.js";
+const dotenv = require("dotenv");
+const LoadFiles = require("./load-files.js").LoadFiles;
+const Api = require("./api.js").Api;
+const Controller = require("./controller.js").Controller;
+const FinancialContent = require("./financial-content.js").FinancialContent;
+const Store = require("./store.js").Store;
 
 dotenv.config();
 if (!process.env.BLACKLIST_URL || !process.env.FINANCIAL_CONTENT_LIST_URL) {
@@ -24,4 +24,4 @@ const loadFiles = new LoadFiles(
 (async () => await loadFiles.execute())();
 setInterval(loadFiles.execute, fetchIntervalInMs);
 
-export { api };
+module.exports = { api };

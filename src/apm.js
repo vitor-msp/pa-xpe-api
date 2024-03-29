@@ -6,8 +6,6 @@ if (!process.env.ELASTIC_APM_URL)
 
 const elasticApm = require("elastic-apm-node");
 elasticApm.start({
-  serviceName: "",
-  secretToken: "",
   serverUrl: process.env.ELASTIC_APM_URL,
   environment: "production",
 });

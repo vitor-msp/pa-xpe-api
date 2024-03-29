@@ -1,5 +1,6 @@
-import express, { Router } from "express";
-import cors from "cors";
+const express = require("express");
+const Router = express.Router;
+const cors = require("cors");
 
 class Api {
   constructor(controller) {
@@ -23,4 +24,4 @@ class Api {
   }
 }
 
-export { Api };
+module.exports = { Api };

@@ -18,4 +18,4 @@ class FinancialContent {
   }
 }
 
-export { FinancialContent };
+module.exports = { FinancialContent };

@@ -8,4 +8,4 @@ class Store {
   };
 }
 
-export { Store };
+module.exports = { Store };
