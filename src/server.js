@@ -1,3 +1,4 @@
+import apm from "./apm.cjs";
 import dotenv from "dotenv";
 import { api } from "./build.js";
 
