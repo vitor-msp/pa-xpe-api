@@ -1,0 +1,18 @@
+service: pa-xpe-api
+provider:
+  name: aws
+  runtime: nodejs18.x
+functions:
+  app:
+    handler: src/aws/lambda.handler
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+    layers:
+      - arn:aws:lambda:us-east-1:267093732750:layer:elastic-apm-extension-ver-1-5-3-x86_64:1
+      - arn:aws:lambda:us-east-1:267093732750:layer:elastic-apm-node-ver-4-5-0:1
+    environment:
+      NODE_OPTIONS: -r elastic-apm-node/start
+      ELASTIC_APM_LAMBDA_APM_SERVER: ${env:ELASTIC_APM_URL}
+      ELASTIC_APM_API_KEY: ${env:ELASTIC_APM_API_KEY}
+      ELASTIC_APM_SEND_STRATEGY: background
