@@ -1,6 +1,8 @@
-import { FinancialContent } from "../src/financial-content.js";
-import { Store } from "../src/store.js";
-import { financialContentList } from "./file-examples/financial-content-list.js";
+const { FinancialContent } = require("../src/financial-content.js");
+const { Store } = require("../src/store.js");
+const {
+  financialContentList,
+} = require("./file-examples/financial-content-list.js");
 
 describe("core tests", () => {
   let financialContent;

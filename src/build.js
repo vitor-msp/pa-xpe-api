@@ -1,9 +1,9 @@
 const dotenv = require("dotenv");
-const LoadFiles = require("./load-files.js").LoadFiles;
-const Api = require("./api.js").Api;
-const Controller = require("./controller.js").Controller;
-const FinancialContent = require("./financial-content.js").FinancialContent;
-const Store = require("./store.js").Store;
+const { LoadFiles } = require("./load-files.js");
+const { Api } = require("./api.js");
+const { Controller } = require("./controller.js");
+const { FinancialContent } = require("./financial-content.js");
+const { Store } = require("./store.js");
 
 dotenv.config();
 if (!process.env.BLACKLIST_URL || !process.env.FINANCIAL_CONTENT_LIST_URL) {

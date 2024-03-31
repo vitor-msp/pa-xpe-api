@@ -1,10 +1,12 @@
-import supertest from "supertest";
-import { FinancialContent } from "../src/financial-content.js";
-import { Controller } from "../src/controller.js";
-import { Api } from "../src/api.js";
-import { Store } from "../src/store.js";
-import { blacklist } from "./file-examples/blacklist.js";
-import { financialContentList } from "./file-examples/financial-content-list.js";
+const supertest = require("supertest");
+const { FinancialContent } = require("../src/financial-content.js");
+const { Controller } = require("../src/controller.js");
+const { Api } = require("../src/api.js");
+const { Store } = require("../src/store.js");
+const { blacklist } = require("./file-examples/blacklist.js");
+const {
+  financialContentList,
+} = require("./file-examples/financial-content-list.js");
 
 describe("api tests", () => {
   let api;
@@ -50,9 +52,7 @@ describe("api tests", () => {
   });
 
   test("should redirect to YOUTUBE url with status code 302 when counter not informed", async () => {
-    const response = await supertest(api)
-      .get("/api/financial-content")
-      .send();
+    const response = await supertest(api).get("/api/financial-content").send();
     expect(response.statusCode).toBe(302);
     expect(response.headers["location"]).toEqual("https://www.youtube.com/");
   });

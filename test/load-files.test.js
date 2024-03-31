@@ -1,8 +1,9 @@
-import { jest } from "@jest/globals";
-import { LoadFiles } from "../src/load-files.js";
-import { Store } from "../src/store.js";
-import { blacklist } from "./file-examples/blacklist.js";
-import { financialContentList } from "./file-examples/financial-content-list.js";
+const { LoadFiles } = require("../src/load-files.js");
+const { Store } = require("../src/store.js");
+const { blacklist } = require("./file-examples/blacklist.js");
+const {
+  financialContentList,
+} = require("./file-examples/financial-content-list.js");
 
 global.fetch = jest.fn((url) =>
   Promise.resolve({
