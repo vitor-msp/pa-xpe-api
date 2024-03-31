@@ -6,10 +6,19 @@ class LoadFiles {
   }
 
   async execute() {
-    let response = await fetch(this.blacklistUrl);
-    this.store.blacklist = await response.json();
+    await Promise.all([
+      this.fetchBlacklist(),
+      this.fetchFinancialContentList(),
+    ]);
+  }
 
-    response = await fetch(this.financialContentListUrl);
+  async fetchBlacklist() {
+    const response = await fetch(this.blacklistUrl);
+    this.store.blacklist = await response.json();
+  }
+
+  async fetchFinancialContentList() {
+    const response = await fetch(this.financialContentListUrl);
     this.store.contentList = await response.json();
   }
 }
