@@ -1,0 +1,55 @@
+name: PA XPE deploy AWS Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+
+      - name: restore node packages
+        run: npm i --production
+
+      - name: install serverless
+        run: npm i -g serverless@3.x
+
+      - name: authenticate serverless in aws
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          serverless config credentials \
+          --provider aws \
+          --key $AWS_ACCESS_KEY_ID \
+          --secret $AWS_SECRET_ACCESS_KEY
+
+      - name: create .env file
+        env:
+          BLACKLIST_URL: ${{ vars.BLACKLIST_URL }}
+          FINANCIAL_CONTENT_LIST_URL: ${{ vars.FINANCIAL_CONTENT_LIST_URL }}
+          FETCH_INTERVAL_IN_MS: ${{ vars.FETCH_INTERVAL_IN_MS }}
+        run: |
+          touch .env
+          echo "BLACKLIST_URL=$BLACKLIST_URL" >> .env
+          echo "FINANCIAL_CONTENT_LIST_URL=$FINANCIAL_CONTENT_LIST_URL" >> .env
+          echo "FETCH_INTERVAL_IN_MS=$FETCH_INTERVAL_IN_MS" >> .env
+
+      - name: run serverless
+        env:
+          ELASTIC_APM_URL: ${{ vars.ELASTIC_APM_URL }}
+          ELASTIC_APM_API_KEY: ${{ secrets.ELASTIC_APM_API_KEY }}
+        run: |
+          ELASTIC_APM_URL=$ELASTIC_APM_URL \
+          ELASTIC_APM_API_KEY=$ELASTIC_APM_API_KEY \
+          serverless deploy
