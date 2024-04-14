@@ -4,6 +4,7 @@ const config = {
   collectCoverage: true,
   coverageDirectory: "coverage",
   rootDir: "test",
+  collectCoverageFrom: ["../src/*.js"],
 };
 
 export default config;
